@@ -1,6 +1,5 @@
 <html>
 <head>
-<script type="text/javascript" src="crunchbase_info.json"></script>
 </head>
 <body>
 <h1>Hello World</h1>
@@ -11,9 +10,11 @@
 </body>
 
 
-<script type="text/javascript" src="javascrip.js">
+<script type="text/javascript" src="crunchbase_info.json"></script>
+<script type="text/javascript">
+console.log("OUTPUTTING SOME INFO");
 var mydata = JSON.parse("crunchbase_info.json");
 
-console.log(mydata[0].basicInfo)
+console.log(mydata[0].basicInfo);
 </script>
 </html>

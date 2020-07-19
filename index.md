@@ -31,9 +31,9 @@
 
 
             //console.log("Listing the sample JSON file...")
-            //for (var i = 0; i < json.length; i++) {
+            for (var i = 0; i < json.length; i++) {
 
-            for (var i = 0; i < 1; i++) {
+            //for (var i = 0; i < 1; i++) {
 
                 var headers = Object.keys(json[i])
                 //console.log(headers);
@@ -42,8 +42,7 @@
                 listItem.innerHTML = '<strong>' + json[i].name + '</strong>';
                 listItem.innerHTML += ' : '+json[i].company_number;
                 listItem.innerHTML += ' can be found in ' + json[i].location + '.';
-                listItem.innerHTML += '<ul><li> Basically :'+json[i].basicInfo+'</li>';
-                listItem.innerHTML += '<li> Desc :'+json[i].description+'</li></ul>';
+                listItem.innerHTML += '<ul><li>Basically : '+json[i].basicInfo+'</li><li>Desc : '+json[i].description+'</li></ul>';
                 myList.appendChild(listItem);
 
 

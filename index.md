@@ -7,7 +7,7 @@
 
 <body>
     <h1>Company Demo</h1>
-    <ul></ul>
+    <ul id="sample-info"></ul>
 
     <div id="demo"></div>
 
@@ -17,7 +17,7 @@
 
 <script type="text/javascript">
 
-    var myList = document.querySelector('ul');
+    var myList = document.querySelector('#sample-info');
     fetch("crunchbase_info_sample.json")
         .then(function (response) {
             if (!response.ok) {

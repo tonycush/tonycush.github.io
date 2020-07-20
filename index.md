@@ -183,7 +183,7 @@
                         
                         url:function(cell){
                             console.log("** LINKAGE ****");
-                            var linkage = "company.php?name="+cell.getData().name;
+                            var linkage = "company.html?"+cell.getData().name;
                             console.log(linkage);
                             return linkage ;
                         },

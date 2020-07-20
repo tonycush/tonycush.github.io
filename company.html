@@ -25,10 +25,7 @@
 <body>
     <h1>Company Demo</h1>
     <h3>Company INFO</h3>
-    <?php
-    $temp_company = $_GET['name'];
-    echo "<h3>" . $temp_company . "</h3>";
-    ?>
+    <h3>Axial3D</h3>
     <div id="sample" style="background-color: beige;"></div>
     <div id="details"></div>
 
@@ -48,14 +45,19 @@
         })
         .then(function(mydata) {
             console.log("RIGHT - I only want this FILE")
-            var this_company_name = '<?php $this_company = $_GET['name'];
-                                        echo $this_company ?>'
+
+            var searching = window.location.search;            
+            var this_company_name = searching.substring(1);
+
 
             console.log(this_company_name);
             console.log(mydata);
             var this_company_pos = mydata.findIndex((item) => item.name === this_company_name);
+            //console.log(this_company_pos)
             console.log(mydata[this_company_pos])
+
             var ths_comp_out = (JSON.stringify(mydata[this_company_pos]));
+            //document.getElementById("demo").innerHTML = ths_comp_out;
 
             var new_section = document.createElement('div');
 
@@ -63,13 +65,25 @@
             new_section.id = "sect_id";
             new_section.innerHTML = "howzatt??";
             document.getElementById("sample").appendChild(new_section);
+            //document.getElementById("details").append(Object.assign(document.createElement('div'),{class:"comp_output", id:"newDiv"}));
 
+            console.log("*** *** *** ***");
             var sec_keys = Object.keys(mydata[this_company_pos].sections[0]);
+            /*
+            console.log(sec_keys)
+            for (var j = 0; j < sec_keys.length; j++) {
+                entry = sec_keys[j];
+                console.log(entry +" : " + typeof(mydata[this_company_pos].sections[0][entry]))
+            }
+            */
+            console.log("*** *** *** ***");
             for (var i = 0; i < mydata[this_company_pos].sections.length; i++) {
                 var ori_name = mydata[this_company_pos].sections[i].name;
                 var temp_name = ori_name.replace('<!---->', '')
-                var updated = temp_name.trim();     
+                var updated = temp_name.trim();
+                //console.log(ori_name)              
                 if (updated != "null") {
+                    //console.log(updated);
                     new_section = document.createElement('div');
                     new_section.className = "comp_output";
                     new_section.id = updated;
@@ -78,17 +92,26 @@
 
                     for (var j = 0; j < sec_keys.length; j++) {
                         entry = sec_keys[j];
+                        //console.log(entry);
                         entry_type = typeof(mydata[this_company_pos].sections[i][entry]);
+                        //console.log(entry_type);
                         entry_length = mydata[this_company_pos].sections[i][entry].length;
+                        //console.log(entry_length);
                         if (entry_type == 'object' && entry_length > 0) {
+                            //console.log("we got us some infoooss");
+                            //console.log(updated + " : " + entry + " = " + entry_length);
+
                             switch (entry) {
                                 case 'table':
                                     console.log("Aye, thon's a table")
                                     break;
 
                                 case 'imageCard':
-                                    //console.log("--- -- ---- -- - ---");
-                                    //console.log(updated + " : " + entry + " = " + entry_length);
+                                    console.log("--- -- ---- -- - ---");
+                                    console.log(updated + " : " + entry + " = " + entry_length);
+                                    //console.log("IMAGE")
+                                    //console.log(image_keys)
+                                    //console.log(mydata[this_company_pos].sections[i][entry][0]["rows"][0])
                                     image_count = (mydata[this_company_pos].sections[i][entry][0]["rows"].length)
                                     image_keys = Object.keys(mydata[this_company_pos].sections[i][entry][0]["rows"][0]);
                                     image_table = document.createElement('table');
@@ -100,7 +123,9 @@
                                         image_body += "<tr>";
                                         for (var l = 0; l < image_keys.length; l++){
                                             this_image_key = image_keys[l]
-                                            image_detail = mydata[this_company_pos].sections[i][entry][0]["rows"][k][this_image_key];                                            
+                                            image_detail = mydata[this_company_pos].sections[i][entry][0]["rows"][k][this_image_key];
+                                            //console.log(this_image_key+ " : " +image_detail)
+                                            
                                             image_body += "<td>"+image_detail+"</td>";
                                         }
                                         
@@ -111,9 +136,11 @@
                                     document.getElementById(updated).appendChild(image_table);
                                     break;
                                 default:
+                                    //console.log("Standard");
                                     for (var k = 0; k < entry_length; k++) {
                                         this_detail_keys = Object.keys(mydata[this_company_pos].sections[i][entry][k]);
                                         this_detail_values = Object.values(mydata[this_company_pos].sections[i][entry][k]);
+                                        //console.log(this_detail_keys + " ::: " + this_detail_values)
                                         section_info = document.createElement('p');
                                         section_info.innerHTML = this_detail_keys + " ::: " + this_detail_values;
 

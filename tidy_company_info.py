@@ -1,11 +1,11 @@
 import json
 import re
 
-with open('crunchbase_info_sample.json') as json_file:
+with open('crunchbase_info.json') as json_file:
     data = json.load(json_file)
 
 for company in data:
-    print("**** ****")
+    #print("**** ****")
     print(company['name'])
     for company_section in company['sections']:
         #reformat section names
@@ -45,16 +45,16 @@ for company in data:
             #split out each row in the table into an array
             #some rows have multiple entries under 'partners' & 'Lead Investors'
             # these details are to be placed in an array
-            print()
-            print("SORT OUT EACH ROW")
-            print(company_section['table'][0]['columnNames'])
+            #print()
+            #print("SORT OUT EACH ROW")
+            #print(company_section['table'][0]['columnNames'])
             table_len = len(company_section['table'][0]['columnNames'])
 
             split_index = (table_len-1)            
             table_name = company_section['name']
-            print("This "+table_name+" table has : "+str(table_len) +" columns")
+            #print("This "+table_name+" table has : "+str(table_len) +" columns")
             
-            print(table_name)
+            #print(table_name)
             for i in company_section['table'][0]['rows']:
                 j = i[0].split(',')
 
@@ -69,15 +69,16 @@ for company in data:
                 i[0] = start
                 #print("This row has : "+str(len(j)) +" columns")
 
-            
+            """
             print("Did that work")
             for i in company_section['table'][0]['rows']:
                 i = i[0]
                 print(len(i))
                 print(i)
+            """
 
             
-with open('crunchbase_info_sample2.json','w') as outfile:
+with open('crunchbase_info_tidy.json','w') as outfile:
     json.dump(data,outfile)
     
                 

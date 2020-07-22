@@ -57,6 +57,7 @@
 
 
             console.log(this_company_name);
+            this_company_name = this_company_name.replace("%20"," ")
             console.log(mydata);
             var this_company_pos = mydata.findIndex((item) => item.name === this_company_name);
             //console.log(this_company_pos)
@@ -128,7 +129,7 @@
                                     table_headings += "</tr></thead></strong>";
 
 
-                                    table_body = "<thead>";
+                                    table_body = "<tbody>";
                                     console.log(section_table_info.rows)
                                     sect_table_num_rows = section_table_info.rows.length;
                                     for (var k = 0; k < sect_table_num_rows; k++) {
@@ -136,15 +137,17 @@
 
                                         row_details = section_table_info.rows[k];
 
-                                        console.log(row_details)
-                                        row_split = row_details[0].split(",");
-                                        for (var l = 0; l < row_split.length; l++) {
-                                            table_body += "<td>" + row_split[l] + "</td>"
-
+                                        //console.log("row_details")
+                                        //console.log(row_details)
+                                        //row_split = row_details.split(",")
+                                        //console.log(row_split)
+                                        for (var l = 0; l < row_details[0].length; l++) {
+                                            table_body += "<td>" + row_details[0][l] + "</td>"
+                                            console.log()
                                         }
                                         table_body += "</tr>"
                                     }
-                                    table_body += "</thead>";
+                                    table_body += "</tbody>";
 
 
                                     section_table.innerHTML += table_headings;

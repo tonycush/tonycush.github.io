@@ -22,13 +22,11 @@ for x in data:
 
 order = 1
 for business in businesses:
-    bus_ixbrl = "["
+    business_ixbrl = []
     time.sleep(1)
     print("\n\t***\n")
-    filehistory = (
-        "https://beta.companieshouse.gov.uk/company/" + business + "/filing-history"
-    )
-
+    filehistory = "https://beta.companieshouse.gov.uk/company/" + business + "/filing-history"
+    
     webpage = requests.get(filehistory, "html.parser")
     soup = BeautifulSoup(webpage.content, features="lxml")
 
@@ -63,19 +61,15 @@ for business in businesses:
         for link in any_links:
             if "iXBRL" in link.get_text():
                 ixbrl_acc_link = "https://beta.companieshouse.gov.uk" + link.get("href")
-
                 acc_desc = (link.parent.parent.previous_sibling.previous_sibling)
                 split_acc_desc = acc_desc.text.strip().split(' made up to ')
-                acc_json = "{'accs_type' :'"+split_acc_desc[0] +"', 'accs_made_up_to':'"+split_acc_desc[1] +"','ixbrl_acc_link':'"+ ixbrl_acc_link+"'},"
-                bus_ixbrl+=acc_json
-    
-    if bus_ixbrl[-1] == ',':
-        bus_ixbrl= bus_ixbrl[:-1]    
-    bus_ixbrl+=']'
+                acc_filed = acc_desc.previous_sibling.previous_sibling.previous_sibling.previous_sibling.text.strip()
+                acc_json = '{"accs_date_filed":"'+ acc_filed+'", "accs_type" :"'+split_acc_desc[0] +'", "accs_made_up_to":"'+split_acc_desc[1] +'","ixbrl_acc_link":"'+ ixbrl_acc_link+'"}'
+                business_ixbrl.append(json.loads(acc_json))
     
     bus_index = (businesses.index(business))
     if data[bus_index]['company_number'] ==business:
-        data[bus_index]['ixbrl_info'] = bus_ixbrl
+        data[bus_index]['ixbrl_info'] = business_ixbrl
 
 with open('my_files/crunchbase_info_tidy.json','w') as outfile:
     json.dump(data,outfile)

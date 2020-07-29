@@ -97,16 +97,8 @@ with open('my_files/crunchbase_info_tidy.json') as json_file:
 
     for x in data[:3]:
         print("£££££" + x['name'])
-        print(x['ixbrl_info'])
-        print(type(x['ixbrl_info']))
-        new_dict = x['ixbrl_info'][1:-1].replace("},{","}%%%%%{")
-        new_dict = new_dict.split("%%%%%")
-        new_dict_array = []
-        for d in new_dict:
-            #print(d)
-            #print(type(d))
-            new_dict_array.append(json.dumps(d))
-        print(new_dict_array)
+        for ix in x['ixbrl_info']:
+            print(ix['ixbrl_acc_link'])        
         
         
 

@@ -11,6 +11,9 @@
         var table = new Tabulator("#json-table", {
             index: "index",
             dataTree: true,
+            pagination: "local",
+            paginationSize: 20,
+            paginationSizeSelector: [10, 20, 30, 40, 50],
             //height: 205, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
             data: mydata, //assign data to table
             layout: "fitColumns", //fit columns to width of table (optional)
@@ -27,7 +30,15 @@
                         target: "_blank",
                     }
                 },
-                { title: "Basic", field: "basicInfo", sorter: "string" },
+                { title: "Basic", field: "basicInfo", sorter: "string", headerSortTristate: true },
+                {
+                    title: "iXBRL", field: "any_iXBRL", sorter: "string", formatter: function (row) {
+                        var x = row.getData(data)
+                        console.log(x)
+                        y = "WHO KNOWS?"
+                        return y
+                    }
+                },
                 {
                     title: "Industries", field: "industries", sorter: "string", formatter: function (row) {
                         var x = row.getData();

@@ -32,9 +32,7 @@
                 },
                 { title: "Basic", field: "basicInfo", sorter: "string", headerSortTristate: true },
                 {
-                    title: "iXBRL", field: "any_iXBRL", sorter: "string", formatter: function (row) {
-                        var x = row.getData(data)
-                        console.log(x)
+                    title: "iXBRL", field: "any_iXBRL", sorter: "string", formatter: function () {
                         y = "WHO KNOWS?"
                         return y
                     }

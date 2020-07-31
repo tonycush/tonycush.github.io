@@ -13,14 +13,14 @@
             dataTree: true,
             pagination: "local",
             paginationSize: 20,
-            paginationSizeSelector: [10, 20, 30, 40, 50],
+            paginationSizeSelector: [15, 20, 25, 30],
             //height: 205, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
             data: mydata, //assign data to table
             layout: "fitColumns", //fit columns to width of table (optional)
             columns: [
                 //Define Table Columns
                 {
-                    title: "Name", field: "name", sorter: "string", headerSortTristate: true, formatter: "link", formatterParams: {
+                    title: "Name", field: "name", headerFilter:true, sorter: "string", headerSortTristate: true, formatter: "link", formatterParams: {
                         url: function (cell) {
                             //console.log(cell.getData());
                             //var linkage = "company.html?" + cell.getData().name;
@@ -32,8 +32,20 @@
                 },
                 { title: "Basic", field: "basicInfo", sorter: "string", headerSortTristate: true },
                 {
-                    title: "iXBRL", field: "any_iXBRL", sorter: "string", formatter: function () {
-                        y = "WHO KNOWS?"
+                    title: "iXBRL", field: "ixbrl_info", sorter: "string", formatter: function (row) {
+                        var x = row.getData();
+                        if ("ixbrl_info" in x) {
+                            if (x.ixbrl_info.length > 0){
+                                y = "YEP"
+                                console.log("include a wee link to the accounts page?")
+                            } else {
+                                y = "NOPE"
+                            }
+
+                        } else {
+                            y = "Not applicable"
+                        }
+                        
                         return y
                     }
                 },

@@ -1,4 +1,19 @@
 .comp_output {
-    border: solid;
+    /*border: solid; 
+    background-color: lightgrey; */
     margin-top: 1em;
+}
+
+.cb_details_output{    
+    /*background-color: azure; */    
+}
+
+.my-footer{
+    margin-top: 2em;
+    margin-bottom: none;
+}
+
+.abd{    
+    margin-top: 1em;
+    margin-bottom: 1em;
 }

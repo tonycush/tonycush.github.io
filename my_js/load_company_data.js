@@ -22,26 +22,48 @@ fetch("my_files/crunchbase_info_tidy.json")
         document.getElementById("header").appendChild(new_section);
 
         //adding iXBRL listing
-        console.log(mydata[this_company_pos]['ixbrl_info'])
-        if (mydata[this_company_pos]['ixbrl_info'].length >0){
+        //console.log(mydata[this_company_pos]['ixbrl_info'])
+        if (mydata[this_company_pos]['ixbrl_info'].length > 0) {
             var ixbrl_accs_table_info = document.createElement('table');
             ixbrl_accs_table_info.id = "ixbrl_table";
             ixbrl_accs_table_info.className = "table table-striped";
             table_headings = "<strong><thead><tr><td>Year</td><td>Made to</td><td>Type</td><td>View</td></tr></thead></strong>";
             table_body = "<tbody>";
-            ixbrl_accs =mydata[this_company_pos]['ixbrl_info'] 
-            for(ixbrl_file = 0; ixbrl_file< ixbrl_accs.length; ixbrl_file++){
-                
+            ixbrl_accs = mydata[this_company_pos]['ixbrl_info']
+            for (ixbrl_file = 0; ixbrl_file < ixbrl_accs.length; ixbrl_file++) {
+
                 ixbrl_accs[ixbrl_file][""]
                 madeup = ixbrl_accs[ixbrl_file]["accs_made_up_to"]
-                madeup_year = madeup.substring(madeup.length-4 ,madeup.length)
+                madeup_year = madeup.substring(madeup.length - 4, madeup.length)
                 acc_type = ixbrl_accs[ixbrl_file]["accs_type"]
                 //ixbrl_accs[ixbrl_file][""]
-                table_body += '<tr><td>'+madeup_year+'</td><td>'+madeup+'</td><td>'+acc_type+'</td><td>$View$</td></tr>'
+                table_body += '<tr><td>' + madeup_year + '</td><td>' + madeup + '</td><td>' + acc_type + '</td>\
+                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ixModal">\
+                view</button></td></tr>'
+                //Adding ixbrl account modal
+                ix_accs_modal_ifo = '<div class="modal" id="ixModal">\
+                <div class="modal-dialog">\
+                    <div class="modal-content">\
+                    <!-- Modal Header -->\
+                    <div class="modal-header">\
+                        <h4 class="modal-title">'+ madeup + '</h4>\
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>\
+                    </div>\
+                    <!-- Modal body -->\
+                    <div class="modal-body">\
+                       '+ixbrl_accs[ixbrl_file]["accs_table"]+'\
+                    </div>\
+                    <!-- Modal footer -->\
+                    <div class="modal-footer">\
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>\
+                    </div>\
+                    </div>\
+                </div>\
+                </div>';
             }
             table_body += "</tbody>";
 
-            ixbrl_accs_table_info.innerHTML =table_headings+table_body
+            ixbrl_accs_table_info.innerHTML = table_headings + table_body + ix_accs_modal_ifo
         } else {
             var ixbrl_accs_table_info = document.createElement('p');
             ixbrl_accs_table_info.innerHTML = "This company has not filed any iXBRL files"
@@ -61,34 +83,34 @@ fetch("my_files/crunchbase_info_tidy.json")
             //field = officer_info[0]
             //data = officer_info[1]
 
-            ch_people_output_string +=  '<div class="card">\
-            <div class="card-header"><h5>'+ch_people_array[i]["Officer"]+'<h5>\
-            <p>'+ch_people_array[i]["Correspondence address"]+'</p></div>\
+            ch_people_output_string += '<div class="card">\
+            <div class="card-header"><h5>'+ ch_people_array[i]["Officer"] + '<h5>\
+            <p>'+ ch_people_array[i]["Correspondence address"] + '</p></div>\
             <div class="card-body">\
                 <div class="row">';
-                //console.log(ch_people_array[i][4][0])
-                for (info = 4;info<officer_info.length;info++){
-                    //officer_detail = "JOHNO";
-                    //console.log(typeof(officer_info[info]))
-                    //console.log(officer_info[info])
-                    role_status = "";
-                    if (officer_info[info][0]=="Role"){     
-                        if(ch_people_array[i]["Status"]=="Active")   {
-                            btn_color = "btn-primary"
-                        }   else {
-                            btn_color = "btn-secondary"
-                        }          
-                        role_status = '<button type="button" class="btn btn-sm '+btn_color+'" disabled>'+ch_people_array[i]["Status"]+'</button>';
+            //console.log(ch_people_array[i][4][0])
+            for (info = 4; info < officer_info.length; info++) {
+                //officer_detail = "JOHNO";
+                //console.log(typeof(officer_info[info]))
+                //console.log(officer_info[info])
+                role_status = "";
+                if (officer_info[info][0] == "Role") {
+                    if (ch_people_array[i]["Status"] == "Active") {
+                        btn_color = "btn-primary"
+                    } else {
+                        btn_color = "btn-secondary"
                     }
-                    ch_people_output_string +='<div class="col-sm-4">\
-                    <p>'+(officer_info[info][0])+"  "+role_status+'</p>\
-                    <p><strong>'+(officer_info[info][1])+'</strong></p>\
-                    </div>';
+                    role_status = '<button type="button" class="btn btn-sm ' + btn_color + '" disabled>' + ch_people_array[i]["Status"] + '</button>';
                 }
-                    
-                ch_people_output_string += '</div>\
+                ch_people_output_string += '<div class="col-sm-4">\
+                    <p>'+ (officer_info[info][0]) + "  " + role_status + '</p>\
+                    <p><strong>'+ (officer_info[info][1]) + '</strong></p>\
+                    </div>';
+            }
+
+            ch_people_output_string += '</div>\
             </div>\
-            <div class="card-footer"><p>'+ch_people_array[i]["Officer link"]+'</p>\</div>\
+            <div class="card-footer"><p>'+ ch_people_array[i]["Officer link"] + '</p>\</div>\
         </div><br>';
         }
         ch_people_output_string += "</div>"
@@ -112,9 +134,9 @@ fetch("my_files/crunchbase_info_tidy.json")
             ch_overview_output_info.className = "col-md-6"
             //console.log(typeof(ch_overview[ch_overview_keys[i]]));
             ch_overview_title = ch_overview_keys[i].replace("_", " ")
-            ch_overview_str = "<strong>" + ch_overview_title + "</strong>"
-            if(ch_overview_title == "previous company_names"){
-                ch_overview_str+="\
+            ch_overview_str = "<br><strong>" + ch_overview_title + "</strong>"
+            if (ch_overview_title == "previous company_names") {
+                ch_overview_str += "\
                 <div class='container'>\
                     <table class='table table-striped'>\
                         <thead><th>Name</th><th>From</th><th>To</th></thead>\
@@ -131,19 +153,19 @@ fetch("my_files/crunchbase_info_tidy.json")
                         //looping through the array of dictionaries
                         ch_overview_output_info.className = "col-md-12"
                         ch_overview_subkeys = Object.keys(ch_overview[ch_overview_keys[i]][j])
-                        if (ch_overview_subkeys.length == 1) {                            
+                        if (ch_overview_subkeys.length == 1) {
                             for (k = 0; k < ch_overview_subkeys.length; k++) {
-                                ch_overview_str += "<p><strong>" + ch_overview_subkeys[k] + "</strong> : " + ch_overview[ch_overview_keys[i]][j][ch_overview_subkeys[k]];                            
+                                ch_overview_str += "<p><strong>" + ch_overview_subkeys[k] + "</strong> : " + ch_overview[ch_overview_keys[i]][j][ch_overview_subkeys[k]];
                             }
-                        } else {    
-                            ch_overview_str += "<tr>";   
+                        } else {
+                            ch_overview_str += "<tr>";
                             for (k = 0; k < ch_overview_subkeys.length; k++) {
                                 ch_overview_str += "<td>" + ch_overview[ch_overview_keys[i]][j][ch_overview_subkeys[k]] + "</td>";
-                            }                               
-                            ch_overview_str += "</tr>"; 
-                            if (k == (ch_overview_subkeys.length-1)){
+                            }
+                            ch_overview_str += "</tr>";
+                            if (k == (ch_overview_subkeys.length - 1)) {
                                 ch_overview_str += "</tbody></table>";
-                            }  
+                            }
                         }
                     }
                 }

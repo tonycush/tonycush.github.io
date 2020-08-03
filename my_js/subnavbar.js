@@ -10,7 +10,7 @@ document.write('\
         <a class="nav-link" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="false">People</a>\
     </li>\
     <li class="nav-item">\
-        <a class="nav-link" id="accounts-tab" data-toggle="tab" href="#accounts" role="tab" aria-controls="accounts" aria-selected="false">Accounts??</a>\
+        <a class="nav-link" id="accounts-tab" data-toggle="tab" href="#accounts" role="tab" aria-controls="accounts" aria-selected="false">Accounts</a>\
     </li>\
     <li class="nav-item">\
         <a class="nav-link" id="placeholder1-tab" data-toggle="tab" href="#placeholder1" role="tab" aria-controls="placeholder1" aria-selected="false">Place holder</a>\
@@ -29,13 +29,11 @@ document.write('\
         <div id="ch_people"></div>\
     </div>\
     <div class="tab-pane fade" id="accounts" role="tabpanel" aria-labelledby="accounts-tab">\
-        Accounty countametre\
         <div id="accounts_info" class="comp_output">\
-        <div id="accounts_filed">All Listed</div>\
+        <div id="accounts_filed"><br><h4>All accounts filed</h4><p>To be retrieved...</p></div>\
         <div id="accounts_turked"><br><h4>Turker jobs</h4></div>\
         <div id="accounts_ixbrl"><br><h4>iXBRL details</h4></div>\
-        <br>\
-        <div id="accounts_output"><br><h4>Output</h4></div>\
+        <div id="accounts_output"><br><h4>Output</h4><div id="temp_output_title"></div><div id="temp_output"></div></div>\
         </div>\
     </div>\
     <div class="tab-pane fade" id="placeholder1" role="tabpanel" aria-labelledby="placeholder1-tab">Hold my place!</div>\

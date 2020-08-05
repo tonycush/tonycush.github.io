@@ -27,7 +27,7 @@ document.write();
 
 document.write('\
 <div class="jumbotron text-center">\
-  <h1>WHO WRITE\'S THIS</h1>\
-  <p>Who is or ever was!</p>\
+  <h1>WEBSITE BANNER</h1>\
+  <p>Check this out!</p>\
 </div>\
 ');

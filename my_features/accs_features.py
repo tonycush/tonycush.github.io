@@ -2,6 +2,7 @@ import pandas as pd
 from pandas import DataFrame
 import json
 import numpy as np
+from tableschema import Table
 """
 FEATURES : 
     TO FIND : 
@@ -82,28 +83,71 @@ with open('my_files/crunchbase_info_tidy_sample.json') as json_file:
 #subsets required from crunchbase data['Overview','Investors'{table},'Funding Rounds'{table}] ]
 #overview_df = pd.DataFrame()
 acc_titles=[]
+acc_years=[]
 for company in data:
-    print(company['name'])
+    print("\n^^^ "+company['name']+" ^^^\n")
     #this_index= data.index(company)
     #print(this_index)
-    df = pd.json_normalize(company['ixbrl_info'])
-    print(df.info())
-    if df.empty:
-        print("EMPTY?")
-    else:
-        print("WHAT HAVE WE GOT HERE")
-        all_accs = df['accs_table.data']
-        for acc in all_accs:
-            if isinstance(acc, list):
-                for entry in acc:
-                    title = entry['Title'].upper().strip()
-                    if title not in acc_titles:
-                        acc_titles.append(title)
-            #print(">>>>>>>>>>>>>>>>\n")
-        #print("-----------------\n")
+    if 'ixbrl_info' in company:
+        df = pd.json_normalize(company['ixbrl_info'])
+        print(df.info())
+        if not df.empty:
+            #print("WHAT HAVE WE GOT HERE")
+            if 'accs_table.data' in df:
+                all_schemas = df['accs_table.schema.fields']
+                for schema in all_schemas:
+                    if isinstance(schema,list):
+                        how_many_cols = len(schema)
+                        print(schema)
+                        if how_many_cols == 4:
+                            schema[3]['name'] = 'current_r'
+                        elif how_many_cols == 7:
+                            schema[3]['name'] ='current_l'
+                            schema[4]['name'] ='current_r'
+                            schema[5]['name'] ='previous_l'
+                            schema[6]['name'] ='previous_r'
+                        elif how_many_cols ==5:
+                            last_col = schema[4]['name']
+                            if last_col[-1:] =='+':
+                                schema[3]['name'] ='current_l'
+                                schema[4]['name'] ='current_r'
+                            else:
+                                schema[3]['name'] ='current_r'
+                                schema[4]['name'] ='previous_r'
+                        print(schema)
+            
+                
+                print(">>>>>>>>>>>>>>>>\n")
+                
+                all_accs = df['accs_table.data']
+                #print(all_accs)
+                print(all_schemas)
+                for acc in all_accs:
+                    if isinstance(acc, list):
+                        for entry in acc:
+                            print(entry)
+                            title = entry['Title']
+                            #title = entry['Title'].upper().strip()
+                            if title not in acc_titles:
+                                acc_titles.append(title)
+                    #print(">>>>>>>>>>>>>>>>\n")
+                #print("-----------------\n")
 
 acc_titles.sort()
-print(acc_titles)
+#print(acc_titles)
+#print(str(len(acc_titles))+" : TITLE types??\n\n")
+
+acc_titles.sort()
+#print(acc_years)
+
+#acc_titles.clear()
+search_titles = []
+for title in acc_titles:
+    if 'ORD' not in title:
+        search_titles.append(title)
+#print(search_titles)
+#print(str(len(search_titles))+" : TITLE types??\n\n")
+
 
 #print(section_df.head())
 #print(section_df.info())

@@ -257,13 +257,18 @@ for company in data:
 
             ##LETS TRANSPOSE & UNSTACK
             acc_headers = list(acc_layout['Title'])
-            acc_headers = [this_year+"_"+header for header in acc_headers]
+            acc_headers = [this_year+"_title_"+header for header in acc_headers]
             #CHECK FOR DUPLIACTE HEADERS
             acc_headers = rename_duplicate_headers(acc_headers)
             acc_values = (acc_layout['current_r'])
             acc_table_df = acc_values.to_frame().T
-            
+
+          
             acc_table_df.columns = acc_headers
+            for acc_header in acc_headers:
+                if 'ORDINARY' in acc_header:
+                    acc_table_df = acc_table_df.drop(columns=[acc_header])
+
             acc_table_df['comp_index'] = company['index']
             this_company_accs_df = pd.merge(this_company_accs_df,acc_table_df, how='outer',left_on='comp_index', right_on='comp_index')
         #print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
@@ -300,5 +305,5 @@ drop_cols = ['present_index','present_comp_index','present_name','present_ni_com
 for drop_col in drop_cols:
     df_features=df_features.drop(columns=[drop_col])
 
-df_features.to_excel(r'my_files/features.xlsx',index = False)
+df_features.to_excel(r'my_files/features2.xlsx',index = False)
 

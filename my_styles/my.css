@@ -11,9 +11,22 @@
 .my-footer{
     margin-top: 2em;
     margin-bottom: none;
+    position: fixed;
+    bottom : 0;
+    width: 100%;
 }
 
 .abd{    
     margin-top: 1em;
     margin-bottom: 1em;
+}
+
+#header{
+    margin-top: 3em;
+    margin-bottom: 1em;
+}
+
+#accounts_output{
+    
+    margin-bottom: 3em;
 }

@@ -1,5 +1,5 @@
-
-    fetch("my_files/crunchbase_info_tidy.json")
+//fetch("my_files/crunchbase_info_tidy.json")
+fetch("my_files/crunchbase_info_tidy.json")
     .then(function (response) {
         if (!response.ok) {
             throw new Error("HTTP error, status = " + response.status);
@@ -7,6 +7,13 @@
         return response.json();
     })
     .then(function (mydata) {
+        var customAccessor = function (value, data, type, params, column) {
+            console.log(value)
+            x = value;
+            console.log(x[0]['Industries '])
+
+            return (value); //return the new value for the cell data.
+        }
         //create Tabulator on DOM element with id "json-table"
         var table = new Tabulator("#json-table", {
             index: "index",
@@ -20,7 +27,7 @@
             columns: [
                 //Define Table Columns
                 {
-                    title: "Name", field: "name", headerFilter:true, sorter: "string", headerSortTristate: true, formatter: "link", formatterParams: {
+                    title: "Name", field: "name", headerFilter: true, sorter: "string", headerSortTristate: true, formatter: "link", formatterParams: {
                         url: function (cell) {
                             //console.log(cell.getData());
                             //var linkage = "company.html?" + cell.getData().name;
@@ -32,25 +39,7 @@
                 },
                 { title: "Basic", field: "basicInfo", sorter: "string", headerSortTristate: true },
                 {
-                    title: "iXBRL", field: "ixbrl_info", sorter: "string", formatter: function (row) {
-                        var x = row.getData();
-                        if ("ixbrl_info" in x) {
-                            if (x.ixbrl_info.length > 0){
-                                y = "YEP"
-                                console.log("include a wee link to the accounts page?")
-                            } else {
-                                y = "NOPE"
-                            }
-
-                        } else {
-                            y = "Not applicable"
-                        }
-                        
-                        return y
-                    }
-                },
-                {
-                    title: "Industries", field: "industries", sorter: "string", formatter: function (row) {
+                    title: "Industries", field: "industries", sorter: "string", headerFilter:true, formatter: function (row) {
                         var x = row.getData();
                         var section_len = x.sections.length;
                         var overview_pos = x.sections.findIndex((item) => item.name === "Overview");
@@ -70,9 +59,9 @@
                         }
 
                     },
-                },
+                }, 
                 {
-                    title: "Foundry", field: "founders", sorter: "string", formatter: function (row) {
+                    title: "Foundry", field: "founders", sorter: "string", headerFilter: true, formatter: function (row) {
                         var x = row.getData();
                         var section_len = x.sections.length;
                         var overview_pos = x.sections.findIndex((item) => item.name === "Overview");

@@ -21,6 +21,7 @@ fetch("my_files/crunchbase_info_tidy.json")
         new_section.innerHTML = mydata[this_company_pos]['name'];
         document.getElementById("header").appendChild(new_section);
 
+        /*
         //adding iXBRL listing
         //console.log(mydata[this_company_pos]['ixbrl_info'])
         if (mydata[this_company_pos]['ixbrl_info'].length > 0) {
@@ -69,7 +70,7 @@ fetch("my_files/crunchbase_info_tidy.json")
             ixbrl_accs_table_info.innerHTML = "This company has not filed any iXBRL files"
         }
         document.getElementById("accounts_ixbrl").appendChild(ixbrl_accs_table_info);
-
+*/
 
         //Adding Company House Peoples
         var ch_people_output = document.createElement('div');

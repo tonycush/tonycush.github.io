@@ -30,10 +30,8 @@ document.write('\
     </div>\
     <div class="tab-pane fade" id="accounts" role="tabpanel" aria-labelledby="accounts-tab">\
         <div id="accounts_info" class="comp_output">\
-        <div id="accounts_filed"><br><h4>All accounts filed</h4><p>To be retrieved...</p></div>\
-        <div id="accounts_turked"><br><h4>Turker jobs</h4></div>\
-        <div id="accounts_ixbrl"><br><h4>iXBRL details</h4></div>\
-        <div id="accounts_output"><br><h4>Output</h4><div id="temp_output_title"></div><div id="temp_output"></div></div>\
+        <div id="accounts_filed"><br><h4>All accounts filed</h4></div>\
+        <div id="accounts_output"><br><div id="temp_output_title"></div><div id="temp_output"></div></div>\
         </div>\
     </div>\
     <div class="tab-pane fade" id="placeholder1" role="tabpanel" aria-labelledby="placeholder1-tab">Hold my place!</div>\
